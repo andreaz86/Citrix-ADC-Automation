@@ -22,8 +22,3 @@ provider "tls" {
 }
 
 
-
-# locals {
-#   adc1_url=  format("%s%s","https://",module.adc.adc01_public_ip)
-#   adc2_url=  format("%s%s","https://",module.adc.adc02_public_ip)
-# }

@@ -1,6 +1,6 @@
-output "monitoring_external_ip" {
+output "backend_vm_internal_ip" {
   value = {
-    for k, mon_vm in google_compute_instance.mon_vm : k => mon_vm.network_interface.0.access_config.0.nat_ip
+    for k, backend_vm in google_compute_instance.backend_vm : k => backend_vm.network_interface.0.network_ip
   }
 }
 

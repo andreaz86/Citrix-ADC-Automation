@@ -3,7 +3,7 @@ variable "gcp_project_id" {}
 variable "gcp_region" {}
 variable "gcp_zone" {}
 variable "gcp_project_name" {}
-variable "gcp_service_account" {}
+
 
 # VM Variables
 variable "vmname_prefix" {}
@@ -19,11 +19,10 @@ variable "vip_ip" {
 }
 
 variable "backend_vm" {
-  description = "Monitoring VM config"
-  type        = map(any)
+  description = "Backend VM configuration"
   default = {
-    mon01 = {
-      name     = "backend"
+    backend01 = {
+      name     = "backend01"
       vmtype   = "n2-standard-2"
       zone     = "europe-west4-a"
       ip       = "192.168.2.5"
@@ -31,20 +30,27 @@ variable "backend_vm" {
       disktype = "pd-standard"
       disksize = "10"
     }
+    backend02 = {
+      name     = "backend02"
+      vmtype   = "n2-standard-2"
+      zone     = "europe-west4-a"
+      ip       = "192.168.2.6"
+      vmimage  = "projects/etranslab-inc-public/global/images/wordpress-base-v5-9-3"
+      disktype = "pd-standard"
+      disksize = "10"
+    }
   }
 }
 
-variable "front_vm" {
-  type = map(any)
+variable "client_vm" {
+  description = "Client VM to be used as host in the Client Network"
   default = {
-    stf01 = {
-      name     = "test01"
+      name     = "client01"
       vmtype   = "n2-standard-2"
       zone     = "europe-west4-a"
       ip       = "192.168.5.6"
       vmimage  = "windows-cloud/windows-2022"
       disktype = "pd-standard"
-    }
   }
 }
 

@@ -1,8 +1,7 @@
-resource "google_compute_instance" "vm_cc" {
-  for_each     = var.front_vm
-  name         = "${var.vmname_prefix}${each.value.name}"
-  machine_type = each.value.vmtype
-  zone         = each.value.zone
+resource "google_compute_instance" "client_vm" {
+  name         = "${var.vmname_prefix}${var.client_vm.name}"
+  machine_type = var.client_vm.vmtype
+  zone         = var.client_vm.zone
   tags         = ["ssh", "rdp", "cloudconnector"]
   scheduling {
     provisioning_model          = "SPOT"
@@ -12,13 +11,13 @@ resource "google_compute_instance" "vm_cc" {
   }
   boot_disk {
     initialize_params {
-      image = each.value.vmimage
-      type  = each.value.disktype
+      image = var.client_vm.vmimage
+      type  = var.client_vm.disktype
     }
   }
   network_interface {
     subnetwork = var.client_subnetself_id
-    network_ip = each.value.ip
+    network_ip = var.client_vm.ip
     access_config {
 
     }

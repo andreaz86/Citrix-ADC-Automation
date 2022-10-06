@@ -11,7 +11,7 @@ resource "local_file" "ssh_private_key_pem" {
   file_permission = "0600"
 }
 
-resource "google_compute_instance" "mon_vm" {
+resource "google_compute_instance" "backend_vm" {
   for_each     = var.backend_vm
   name         = "${var.vmname_prefix}${each.value.name}"
   machine_type = each.value.vmtype

@@ -27,5 +27,5 @@ output "vip_ip" {
 }
 
 output "backend_ip" {
-  value = var.backend_vm.mon01.ip
+  value = module.backend.backend_vm_internal_ip
 }

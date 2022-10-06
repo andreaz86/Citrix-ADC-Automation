@@ -31,14 +31,14 @@ module "backend" {
   server_subnetself_id = module.vpc.server_subnetself_id
 }
 
-# module "test" {
-#   source               = "./modules/compute_instances/test"
-#   front_vm             = var.front_vm
-#   vmname_prefix        = var.vmname_prefix
-#   client_subnetself_id = module.vpc.client_subnetself_id
-#   username             = var.username
-#   password             = var.password
-# }
+module "client" {
+  source               = "./modules/compute_instances/client"
+  client_vm             = var.client_vm
+  vmname_prefix        = var.vmname_prefix
+  client_subnetself_id = module.vpc.client_subnetself_id
+  username             = var.username
+  password             = var.password
+}
 
 # resource "time_sleep" "wait_30_seconds" {
 #   depends_on = [null_resource.previous]
