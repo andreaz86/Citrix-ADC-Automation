@@ -26,7 +26,8 @@ variable "backend_vm" {
       vmtype   = "e2-medium"
       zone     = "europe-west4-a"
       ip       = "192.168.2.5"
-      vmimage  = "projects/etranslab-inc-public/global/images/wordpress-base-v5-9-3"
+      #vmimage  = "projects/etranslab-inc-public/global/images/wordpress-base-v5-9-3"
+      vmimage  = "debian-cloud/debian-10"
       disktype = "pd-standard"
       disksize = "10"
     }
@@ -35,7 +36,7 @@ variable "backend_vm" {
       vmtype   = "e2-medium"
       zone     = "europe-west4-b"
       ip       = "192.168.2.6"
-      vmimage  = "projects/etranslab-inc-public/global/images/wordpress-base-v5-9-3"
+      vmimage  = "debian-cloud/debian-10"
       disktype = "pd-standard"
       disksize = "10"
     }

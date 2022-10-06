@@ -39,5 +39,23 @@ resource "google_compute_instance" "backend_vm" {
   }
   metadata = {
     ssh-keys = "${split("@", data.google_client_openid_userinfo.me.email)[0]}:${tls_private_key.ssh.public_key_openssh}"
+    startup-script = <<-EOF1
+      #! /bin/bash
+      set -euo pipefail
+
+      export DEBIAN_FRONTEND=noninteractive
+      apt-get update
+      apt-get install -y nginx-light jq
+
+      NAME=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/hostname")
+      IP=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip")
+
+      cat <<EOF > /var/www/html/index.html
+      <pre>
+      Name: $NAME
+      IP: $IP
+      </pre>
+      EOF
+    EOF1
   }
 }

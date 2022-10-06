@@ -12,7 +12,7 @@ resource "google_compute_health_check" "tcp-health-check" {
 resource "google_compute_instance_group" "instance_group_adc01" {
   name = "ig-adc01"
   instances = [
-    var.adc01_id
+    var.adc01_self_link
   ]
   zone = "europe-west4-a"
 }
@@ -20,7 +20,7 @@ resource "google_compute_instance_group" "instance_group_adc01" {
 resource "google_compute_instance_group" "instance_group_adc02" {
   name = "ig-adc02"
   instances = [
-    var.adc02_id
+    var.adc02_self_link
   ]
   zone = "europe-west4-b"
 }

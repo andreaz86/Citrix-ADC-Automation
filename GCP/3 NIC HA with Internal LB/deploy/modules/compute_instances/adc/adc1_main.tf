@@ -37,11 +37,11 @@ resource "google_compute_instance" "vm_adc01" {
     network_ip = var.adc_vm.adc01.server_ip
   }
 
-  service_account {
-    email = "562786585484-compute@developer.gserviceaccount.com"
-    #email = "default"
-    scopes = ["cloud-platform"]
-  }
+  # service_account {
+  #   email = "default"
+  #   scopes = ["cloud-platform"]
+  # }
+
   allow_stopping_for_update = true
   metadata_startup_script   = <<EOT
   <NS-PRE-BOOT-CONFIG>

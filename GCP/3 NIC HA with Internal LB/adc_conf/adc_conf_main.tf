@@ -1,16 +1,16 @@
-resource "citrixadc_password_resetter" "primaryadc_resetpwd" {
-    provider = citrixadc.adc01
-    username = "nsroot"
-    password = data.terraform_remote_state.adc.outputs.adc01_instance_id
-    new_password = var.password
-}
+# resource "citrixadc_password_resetter" "primaryadc_resetpwd" {
+#     provider = citrixadc.adc01
+#     username = "nsroot"
+#     password = data.terraform_remote_state.adc.outputs.adc01_instance_id
+#     new_password = var.password
+# }
 
-resource "citrixadc_password_resetter" "secondaryadc_resetpwd" {
-    provider = citrixadc.adc02
-    username = "nsroot"
-    password = data.terraform_remote_state.adc.outputs.adc02_instance_id
-    new_password = var.password
-}
+# resource "citrixadc_password_resetter" "secondaryadc_resetpwd" {
+#     provider = citrixadc.adc02
+#     username = "nsroot"
+#     password = data.terraform_remote_state.adc.outputs.adc02_instance_id
+#     new_password = var.password
+# }
 
 resource "citrixadc_nshostname" "hostname_primary" {
     provider = citrixadc.adc01
@@ -77,8 +77,9 @@ resource "citrixadc_lbvserver" "tf_lbvserver" {
   servicetype = "HTTP"
 #   servicename = citrixadc_service.tf_service.name
 #   weight = 1
-persistencetype = "SOURCEIP"
-lbmethod = "ROUNDROBIN"
+  persistencetype = "SOURCEIP"
+  timeout = 2
+  lbmethod = "ROUNDROBIN"
 }
 
 

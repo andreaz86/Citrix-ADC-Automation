@@ -13,6 +13,8 @@ module "loadbalancer" {
   adc01_id             = module.adc.adc01_id
   adc02_id             = module.adc.adc02_id
   vip_ip               = var.vip_ip
+  adc01_self_link      = module.adc.adc01_self_link
+  adc02_self_link      = module.adc.adc02_self_link
 }
 
 module "adc" {
