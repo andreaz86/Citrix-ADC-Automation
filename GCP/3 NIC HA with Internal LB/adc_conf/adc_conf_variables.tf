@@ -1,6 +1,6 @@
 
 variable "password" {
-    default = "!Friskies2019!"
+    default = "!P@sSw0rd01!"
 }
 
 
