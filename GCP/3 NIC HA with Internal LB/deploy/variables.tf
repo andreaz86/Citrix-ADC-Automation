@@ -23,7 +23,7 @@ variable "backend_vm" {
   default = {
     backend01 = {
       name     = "backend01"
-      vmtype   = "n2-standard-2"
+      vmtype   = "e2-medium"
       zone     = "europe-west4-a"
       ip       = "192.168.2.5"
       vmimage  = "projects/etranslab-inc-public/global/images/wordpress-base-v5-9-3"
@@ -32,8 +32,8 @@ variable "backend_vm" {
     }
     backend02 = {
       name     = "backend02"
-      vmtype   = "n2-standard-2"
-      zone     = "europe-west4-a"
+      vmtype   = "e2-medium"
+      zone     = "europe-west4-b"
       ip       = "192.168.2.6"
       vmimage  = "projects/etranslab-inc-public/global/images/wordpress-base-v5-9-3"
       disktype = "pd-standard"
@@ -46,9 +46,9 @@ variable "client_vm" {
   description = "Client VM to be used as host in the Client Network"
   default = {
       name     = "client01"
-      vmtype   = "n2-standard-2"
+      vmtype   = "e2-medium"
       zone     = "europe-west4-a"
-      ip       = "192.168.5.6"
+      ip       = "192.168.3.6"
       vmimage  = "windows-cloud/windows-2022"
       disktype = "pd-standard"
   }

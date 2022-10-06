@@ -19,3 +19,13 @@ resource "google_compute_firewall" "allow-healthcheck-client" {
   source_ranges = ["35.191.0.0/16", "130.211.0.0/22"]
 }
 
+resource "google_compute_firewall" "allow-rdp-client" {
+  name    = "allow-rdp-client"
+  network = google_compute_network.vpc_client.self_link
+  allow {
+    protocol = "tcp"
+    ports    = ["3389"]
+  }
+  source_ranges = ["${chomp(data.http.myip.response_body)}/32"]
+  target_tags   = ["rdp"]
+}

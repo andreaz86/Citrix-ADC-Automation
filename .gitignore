@@ -40,5 +40,3 @@ terraform.rc
 
 **/.ssh/*
 # End of https://www.toptal.com/developers/gitignore/api/terraform
-**/ansible/roles/cloudconnector/files/cwcconnector_install_params.json
-**/ansible/inventory.ini
