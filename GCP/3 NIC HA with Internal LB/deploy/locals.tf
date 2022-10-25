@@ -1,7 +1,3 @@
-locals {
-  ssh_username = split("@", data.google_client_openid_userinfo.me.email)[0]
-}
-
 data "google_client_openid_userinfo" "me" {}
 
 resource "tls_private_key" "ssh" {

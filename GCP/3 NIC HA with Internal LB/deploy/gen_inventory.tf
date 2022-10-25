@@ -1,13 +1,10 @@
 # This will create an inventory file to be used from ansible
 resource "local_file" "hosts_cfg" {
-  content = templatefile("./templates/hosts.tftpl",
+  content = templatefile("./hosts.tftpl",
     {
       monitoring                          = module.monitoring.monitoring_external_ip
-      windowsvda                          = module.win_vda.vda_external_ip
-      terraform_user                      = var.username
-      terraform_pwd                       = var.password
-      admin_password                      = var.admin_password
+      ssh_username        = "${split("@", data.google_client_openid_userinfo.me.email)[0]}"
     }
   )
-  filename = "./ansible/inventory.ini"
+  filename = "../ansible/inventory.ini"
 }

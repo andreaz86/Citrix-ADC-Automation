@@ -1,0 +1,9 @@
+[monitoring]
+${monitoring}
+
+[monitoring:vars]
+ssh_username = ${ssh_username}
+ansible_user = {{ ssh_username }}
+ansible_ssh_private_key_file = ../deploy/.ssh/google_compute_engine
+ansible_become_method = sudo
+ansible_ssh_common_args = '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'

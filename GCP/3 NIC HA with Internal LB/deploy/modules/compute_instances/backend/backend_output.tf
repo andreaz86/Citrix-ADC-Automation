@@ -4,6 +4,3 @@ output "backend_vm_internal_ip" {
   }
 }
 
-output "ssh_username" {
-  value = split("@", data.google_client_openid_userinfo.me.email)[0]
-}
