@@ -42,3 +42,14 @@ module "client" {
   password             = var.password
 }
 
+module "monitoring" {
+  source               = "./modules/compute_instances/monitoring"
+  vpc_selfid           = module.vpc.server_vpcself_id
+  monitoring_vm        = var.monitoring_vm
+  server_subnetself_id = module.vpc.server_subnetself_id
+  username             = var.username
+  password             = var.password
+  vmname_prefix        = var.vmname_prefix
+}
+
+

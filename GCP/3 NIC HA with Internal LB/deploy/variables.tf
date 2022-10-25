@@ -17,6 +17,19 @@ variable "vip_ip" {
   default = "192.168.3.4"
 }
 
+variable "monitoring_vm" {
+  description = "Monitoring VM config"
+  type        = map(any)
+  default = {
+      name     = "mon01"
+      vmtype   = "n2-standard-2"
+      zone     = "europe-west4-a"
+      ip       = "192.168.3.5"
+      vmimage  = "ubuntu-os-cloud/ubuntu-2204-lts"
+      disktype = "pd-standard"
+      disksize = "40"
+  }
+}
 variable "backend_vm" {
   description = "Backend VM configuration"
   default = {
