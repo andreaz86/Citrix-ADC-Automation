@@ -42,22 +42,3 @@ module "client" {
   password             = var.password
 }
 
-# resource "time_sleep" "wait_30_seconds" {
-#   depends_on = [null_resource.previous]
-
-#   destroy_duration = "30s"
-# }
-
-# module "adc_config" {
-#   source              = "./modules/adc_config"
-#   providers = {
-#     citrixadc.adc01 = citrixadc.primary
-#     citrixadc.adc02 = citrixadc.secondary
-#   }
-#   adc01_instance_id = module.adc.adc01_instance_id
-#   adc02_instance_id = module.adc.adc02_instance_id
-#   password = var.password
-#   depends_on = [
-#     module.adc
-#   ]
-# }

@@ -33,9 +33,7 @@ resource "google_compute_instance" "backend_vm" {
   network_interface {
     subnetwork = var.server_subnetself_id
     network_ip = each.value.ip
-    access_config {
 
-    }
   }
   metadata = {
     ssh-keys = "${split("@", data.google_client_openid_userinfo.me.email)[0]}:${tls_private_key.ssh.public_key_openssh}"

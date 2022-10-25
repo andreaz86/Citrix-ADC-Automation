@@ -10,3 +10,4 @@ data "terraform_remote_state" "adc" {
     path = "../deploy/terraform.tfstate"
   }
 }
+

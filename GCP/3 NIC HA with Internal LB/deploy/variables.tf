@@ -4,7 +4,6 @@ variable "gcp_region" {}
 variable "gcp_zone" {}
 variable "gcp_project_name" {}
 
-
 # VM Variables
 variable "vmname_prefix" {}
 
@@ -12,8 +11,8 @@ variable "vmname_prefix" {}
 variable "username" {}
 variable "password" {}
 
-
 ########### VM CONFIG ##############
+
 variable "vip_ip" {
   default = "192.168.3.4"
 }
@@ -25,8 +24,7 @@ variable "backend_vm" {
       name     = "backend01"
       vmtype   = "e2-medium"
       zone     = "europe-west4-a"
-      ip       = "192.168.2.5"
-      #vmimage  = "projects/etranslab-inc-public/global/images/wordpress-base-v5-9-3"
+      ip       = "192.168.2.4"
       vmimage  = "debian-cloud/debian-10"
       disktype = "pd-standard"
       disksize = "10"
@@ -35,7 +33,7 @@ variable "backend_vm" {
       name     = "backend02"
       vmtype   = "e2-medium"
       zone     = "europe-west4-b"
-      ip       = "192.168.2.6"
+      ip       = "192.168.2.5"
       vmimage  = "debian-cloud/debian-10"
       disktype = "pd-standard"
       disksize = "10"
@@ -81,9 +79,7 @@ variable "adc_vm" {
   }
 }
 
-
 #######################################################
-
 
 # GCP VPC and Subnet Setup
 
