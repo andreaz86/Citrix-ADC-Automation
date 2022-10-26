@@ -59,6 +59,7 @@ services:
       - 5000:5000/udp
       - 9600:9600
       - 5560:5560/udp
+      - 1514:1514/udp
     volumes:
       #- ./logstash/logstash.yml:/usr/share/logstash/logstash.yml:ro
       - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro

@@ -36,7 +36,7 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
-
+**/inventori.ini
 
 **/.ssh/
 # End of https://www.toptal.com/developers/gitignore/api/terraform

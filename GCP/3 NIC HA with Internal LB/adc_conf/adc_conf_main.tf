@@ -24,53 +24,46 @@ resource "citrixadc_nshostname" "hostname_secondary" {
 
 ## HA
 
-# resource "citrixadc_hanode" "local_node" {
-#     provider = citrixadc.adc01
-#     hanode_id     = 0       //the id of local_node is always 0
-#     hellointerval = 400
-#     deadinterval = 30
-# }
+resource "citrixadc_hanode" "local_node" {
+    provider = citrixadc.adc01
+    hanode_id     = 0       //the id of local_node is always 0
+    hellointerval = 400
+    deadinterval = 30
+}
 
-# resource "citrixadc_hanode" "remote_node" {
-#     provider = citrixadc.adc01
-#     hanode_id = 1
-#     ipaddress = data.terraform_remote_state.adc.outputs.adc02_nsip
-#     inc = "ENABLED"
-# }
+resource "citrixadc_hanode" "remote_node" {
+    provider = citrixadc.adc01
+    hanode_id = 1
+    ipaddress = data.terraform_remote_state.adc.outputs.adc02_nsip
+    inc = "ENABLED"
+}
 
-# resource "citrixadc_hanode" "test_local_node" {
-#     provider = citrixadc.adc02
-#     hanode_id     = 0       //the id of local_node is always 0
-#     hellointerval = 400
-#     deadinterval = 30
+resource "citrixadc_hanode" "test_local_node" {
+    provider = citrixadc.adc02
+    hanode_id     = 0       //the id of local_node is always 0
+    hellointerval = 400
+    deadinterval = 30
   
-# }
+}
 
-# resource "citrixadc_hanode" "test_remote_node" {
-#     provider = citrixadc.adc02
-#     hanode_id = 1
-#     ipaddress = data.terraform_remote_state.adc.outputs.adc01_nsip
-#     inc = "ENABLED"
-# }
+resource "citrixadc_hanode" "test_remote_node" {
+    provider = citrixadc.adc02
+    hanode_id = 1
+    ipaddress = data.terraform_remote_state.adc.outputs.adc01_nsip
+    inc = "ENABLED"
+}
 
 # END HA
 
-# resource "citrixadc_service" "tf_service" {
-#   provider = citrixadc.adc02
-#   name = "tf_service"
-#   ip = data.terraform_remote_state.adc.outputs.backend_ip
-#   servicetype  = "HTTP"
-#   port = 80
-# }
+
 
 
 resource "citrixadc_servicegroup" "tf_servicegroup" {
   provider = citrixadc.adc02
   servicegroupname = "tf_servicegroup"
   servicetype = "HTTP"
-  #for_each = data.terraform_remote_state.adc.outputs.backend_ip
   servicegroupmembers = ["${data.terraform_remote_state.adc.outputs.backend_ip.backend01}:80","${data.terraform_remote_state.adc.outputs.backend_ip.backend02}:80"]
-  #lbvservers = [ citrixadc_lbvserver.tf_lbvserver1.name, citrixadc_lbvserver.tf_lbvserver2.name ]
+
 }
 
 resource "citrixadc_lbvserver" "tf_lbvserver" {
@@ -79,8 +72,6 @@ resource "citrixadc_lbvserver" "tf_lbvserver" {
   name        = "tf_lbvserver"
   port        = 80
   servicetype = "HTTP"
-#   servicename = citrixadc_service.tf_service.name
-#   weight = 1
   persistencetype = "SOURCEIP"
   timeout = 2
   lbmethod = "ROUNDROBIN"
@@ -93,12 +84,7 @@ resource "citrixadc_lbvserver_servicegroup_binding" "tf_binding" {
   servicegroupname = citrixadc_servicegroup.tf_servicegroup.servicegroupname
 }
 
-# resource "citrixadc_lbvserver_service_binding" "tf_binding" {
-#   provider = citrixadc.adc02
-#   name = citrixadc_lbvserver.tf_lbvserver.name
-#   servicename = citrixadc_service.tf_service.name
-#   weight = 1
-# }
+
 
 resource "citrixadc_appflowcollector" "tf_appflowcollector" {
   provider = citrixadc.adc02
