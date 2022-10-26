@@ -32,3 +32,14 @@ resource "google_compute_firewall" "allow-ssh-mgmt" {
   source_ranges = ["${chomp(data.http.myip.response_body)}/32"]
   target_tags   = ["ssh"]
 }
+
+resource "google_compute_firewall" "allow-graylog-server_mgmt" {
+  name    = "allow-server-graylog-mgmt"
+  network = google_compute_network.vpc_mgmt.self_link
+  allow {
+    protocol = "tcp"
+    ports    = ["5601"]
+  }
+  source_ranges = ["${chomp(data.http.myip.response_body)}/32"]
+  target_tags   = ["monitoring"]
+}

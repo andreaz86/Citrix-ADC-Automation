@@ -1,0 +1,10 @@
+filebeat.modules:
+#Filebeat system module consumes logs from host OS through a mounted volume
+- module: netflow
+  log:
+    enabled: true
+    var:
+      netflow_host: 0.0.0.0
+      netflow_port: 2055
+output.logstash:
+  hosts: ["logstash:5044"]

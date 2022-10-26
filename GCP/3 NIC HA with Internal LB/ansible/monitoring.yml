@@ -48,13 +48,10 @@
       state: directory
       mode: '0777'
     loop:
-      - /var/appdata/graylog
-      - /var/appdata/mongodb
-      - /var/appdata/opensearch
       - /var/requirements
     become: true
 
-  - name: Copy file with owner and permissions
+  - name: Copy Docker configurations
     ansible.builtin.copy:
       src: "./docker"
       dest: /var/requirements
@@ -71,61 +68,5 @@
         - docker-compose.yaml
     become: true
 
-  - name: Restart Docker Compose stack
-    community.docker.docker_compose:
-      project_src: /var/requirements/docker
-      files:
-        - docker-compose.yaml
-      restarted: true
-    become: true
-    when: copy_requirements.changed
 
-  - name: Change file ownership, group and permissions
-    ansible.builtin.file:
-      path: /var/appdata/opensearch
-      owner: root
-      group: root
-      mode: '0777'
-    become: true
 
-  - name: Wait until HTTP status is 200
-    ansible.builtin.uri:
-      url: 'http://localhost:9000'
-      return_content: true
-      validate_certs: false
-      status_code:
-        - 200
-    until: uri_output.status == 200
-    retries: 24 # Retries for 24 * 5 seconds = 120 seconds = 2 minutes
-    delay: 5 # Every 5 seconds
-    register: uri_output
-
-  # - name: get graylog global udp input for receiving logs
-  #   ansible.builtin.uri:
-  #     url: http://localhost:9000/api/system/inputs
-  #     method: GET
-  #     user: "admin"
-  #     password: "!Friskies2019!"
-  #     force_basic_auth: true
-  #     status_code: 200
-  #     body_format: json
-  #     headers:
-  #       X-Requested-By: ""
-  #   register: get_graylog_input
-
-  # - name: Show facts available on the system
-  #   ansible.builtin.debug:
-  #     var: get_graylog_input
-
-  - name: Create graylog global udp input for receiving logs
-    ansible.builtin.uri:
-      url: http://localhost:9000/api/system/inputs
-      method: POST
-      user: "admin"
-      password: "!Friskies2019!"
-      body: '{"title":"Beat","type":"org.graylog.plugins.beats.Beats2Input","configuration":{"bind_address":"0.0.0.0","port":5044,"recv_buffer_size":262144,"override_source":null,"decompress_size_limit":8388608},"global":true}'
-      force_basic_auth: true
-      status_code: 201
-      body_format: json
-      headers:
-        X-Requested-By: ""

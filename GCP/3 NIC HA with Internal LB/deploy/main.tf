@@ -47,7 +47,7 @@ module "client" {
 module "monitoring" {
   source               = "./modules/compute_instances/monitoring"
   monitoring_vm        = var.monitoring_vm
-  server_subnetself_id = module.vpc.server_subnetself_id
+  server_subnetself_id = module.vpc.mgmt_subnetself_id
   vmname_prefix        = var.vmname_prefix
   ssh_username        = "${split("@", data.google_client_openid_userinfo.me.email)[0]}"
   ssh_key             = "${tls_private_key.ssh.public_key_openssh}"

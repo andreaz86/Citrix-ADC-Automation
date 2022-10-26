@@ -22,34 +22,38 @@ resource "citrixadc_nshostname" "hostname_secondary" {
     hostname = "adc02"
 }
 
-resource "citrixadc_hanode" "local_node" {
-    provider = citrixadc.adc01
-    hanode_id     = 0       //the id of local_node is always 0
-    hellointerval = 400
-    deadinterval = 30
-}
+## HA
 
-resource "citrixadc_hanode" "remote_node" {
-    provider = citrixadc.adc01
-    hanode_id = 1
-    ipaddress = data.terraform_remote_state.adc.outputs.adc02_nsip
-    inc = "ENABLED"
-}
+# resource "citrixadc_hanode" "local_node" {
+#     provider = citrixadc.adc01
+#     hanode_id     = 0       //the id of local_node is always 0
+#     hellointerval = 400
+#     deadinterval = 30
+# }
 
-resource "citrixadc_hanode" "test_local_node" {
-    provider = citrixadc.adc02
-    hanode_id     = 0       //the id of local_node is always 0
-    hellointerval = 400
-    deadinterval = 30
+# resource "citrixadc_hanode" "remote_node" {
+#     provider = citrixadc.adc01
+#     hanode_id = 1
+#     ipaddress = data.terraform_remote_state.adc.outputs.adc02_nsip
+#     inc = "ENABLED"
+# }
+
+# resource "citrixadc_hanode" "test_local_node" {
+#     provider = citrixadc.adc02
+#     hanode_id     = 0       //the id of local_node is always 0
+#     hellointerval = 400
+#     deadinterval = 30
   
-}
-###########################################
-resource "citrixadc_hanode" "test_remote_node" {
-    provider = citrixadc.adc02
-    hanode_id = 1
-    ipaddress = data.terraform_remote_state.adc.outputs.adc01_nsip
-    inc = "ENABLED"
-}
+# }
+
+# resource "citrixadc_hanode" "test_remote_node" {
+#     provider = citrixadc.adc02
+#     hanode_id = 1
+#     ipaddress = data.terraform_remote_state.adc.outputs.adc01_nsip
+#     inc = "ENABLED"
+# }
+
+# END HA
 
 # resource "citrixadc_service" "tf_service" {
 #   provider = citrixadc.adc02
@@ -95,3 +99,34 @@ resource "citrixadc_lbvserver_servicegroup_binding" "tf_binding" {
 #   servicename = citrixadc_service.tf_service.name
 #   weight = 1
 # }
+
+resource "citrixadc_appflowcollector" "tf_appflowcollector" {
+  provider = citrixadc.adc02
+  name      = "tf_collector"
+  ipaddress = "192.168.1.6"
+  transport = "ipfix"
+  port      =  2055
+}
+
+resource "citrixadc_appflowaction" "tf_appflowaction" {
+  provider = citrixadc.adc02
+  name = "test_action"
+  collectors = [citrixadc_appflowcollector.tf_appflowcollector.name]
+  webinsight = "ENABLED"
+
+}
+
+resource "citrixadc_appflowpolicy" "tf_appflowpolicy" {
+  provider = citrixadc.adc02
+  name   = "test_policy"
+  action = citrixadc_appflowaction.tf_appflowaction.name
+  rule   = "true"
+}
+
+resource "citrixadc_appflowglobal_appflowpolicy_binding" "tf_appflowglobal_appflowpolicy_binding" {
+  provider = citrixadc.adc02
+  policyname     = citrixadc_appflowpolicy.tf_appflowpolicy.name
+  globalbindtype = "SYSTEM_GLOBAL"
+  type           = "REQ_OVERRIDE"
+  priority       = 55
+}

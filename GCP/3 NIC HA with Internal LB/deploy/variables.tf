@@ -24,7 +24,7 @@ variable "monitoring_vm" {
       name     = "mon01"
       vmtype   = "n2-standard-2"
       zone     = "europe-west4-a"
-      ip       = "192.168.2.6"
+      ip       = "192.168.1.6"
       vmimage  = "ubuntu-os-cloud/ubuntu-2204-lts"
       disktype = "pd-standard"
       disksize = "40"
