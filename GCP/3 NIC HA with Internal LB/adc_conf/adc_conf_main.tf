@@ -130,3 +130,26 @@ resource "citrixadc_appflowglobal_appflowpolicy_binding" "tf_appflowglobal_appfl
   type           = "REQ_OVERRIDE"
   priority       = 55
 }
+
+resource "citrixadc_appflowparam" "tf_appflowparam" {
+  provider = citrixadc.adc02
+  templaterefresh     = 60
+  flowrecordinterval  = 60
+  httpcookie          = "ENABLED"
+  httplocation        = "ENABLED"
+  httpcontenttype = "ENABLED"
+  httpdomain = "ENABLED"
+  httphost = "ENABLED"
+  httpmethod = "ENABLED"
+  httpquerywithurl = "ENABLED"
+  httpreferer = "ENABLED"
+  httpsetcookie = "ENABLED"
+  httpsetcookie2 = "ENABLED"
+  httpurl = "ENABLED"
+  httpuseragent = "ENABLED"
+  httpvia = "ENABLED"
+  httpxforwardedfor = "ENABLED"
+  identifiername = "ENABLED"
+  identifiersessionname = "ENABLED"
+  connectionchaining = "ENABLED"
+}
